@@ -1,6 +1,6 @@
 [
   (
-            "name": f"网页小部件 {count+1}",
+            "name": "test",
             "url": "https://www.example.com",
             "opacity": 0.8,
             "bg_color": "#00000000",
@@ -8,6 +8,6 @@
             "y": 100,
             "width": 400,
             "height": 300,
-            "always_on_top": True
+            "always_on_top": true
   )
 ]
