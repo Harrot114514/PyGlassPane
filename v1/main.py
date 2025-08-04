@@ -6,7 +6,7 @@ from PyQt5.QtGui import QIcon, QColor, QIntValidator
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtGui import QFontDatabase, QFont
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, 
-                             QLabel, QLineEdit, QListWidget, QStackedWidget, QSystemTrayIcon, 
+                             QLabel, QLineEdit, QListWidget, QGroupBox,QStackedWidget, QSystemTrayIcon, 
                              QMenu, QStyle, QDialog, QSlider, QColorDialog, QCheckBox, QSizePolicy,
                              QMessageBox)
 from PyQt5.QtWidgets import QListWidgetItem  # 添加这一行
@@ -304,6 +304,15 @@ class SettingsWindow(QMainWindow):
         self.widget_list.currentRowChanged.connect(self.show_widget_settings)
         self.widget_list.itemChanged.connect(self.rename_widget)
 
+        # 已打开小部件列表
+        #opened_group = QGroupBox("已打开的小部件")
+        #opened_layout = QVBoxLayout(opened_group)
+
+        self.opened_widgets_list = QListWidget()
+        self.opened_widgets_list.setMinimumHeight(150)
+        self.opened_widgets_list.setMaximumHeight(250)
+        #opened_layout.addWidget(self.opened_widgets_list)
+
     def toggle_all_pin(self, state):
         """切换所有网页小部件的置顶状态"""
         self.global_pinned = (state == Qt.Checked)
@@ -417,7 +426,7 @@ class SettingsWindow(QMainWindow):
             self.close_all_widgets()  # 关闭之前的所有网页
             
             # 创建所有网页小部件
-            for i, widget in enumerate(self.web_widgets):
+            for widget in self.web_widgets:
                 web_view = DraggableWebView(
                     url=widget["url"],
                     opacity=widget["opacity"],
@@ -433,7 +442,7 @@ class SettingsWindow(QMainWindow):
 
                 # 添加到已打开列表
                 item = QListWidgetItem(widget["name"])
-                item.setData(Qt.UserRole, i)  # 存储索引
+                item.setData(Qt.UserRole, widget)  # 存储索引
                 self.opened_widgets_list.addItem(item)
             
             # 隐藏主窗口到系统托盘
@@ -610,5 +619,4 @@ if __name__ == "__main__":
     
     window = SettingsWindow()
     window.show()
-
     sys.exit(app.exec_())
