@@ -417,7 +417,7 @@ class SettingsWindow(QMainWindow):
             self.close_all_widgets()  # 关闭之前的所有网页
             
             # 创建所有网页小部件
-            for widget in self.web_widgets:
+            for i, widget in enumerate(self.web_widgets):
                 web_view = DraggableWebView(
                     url=widget["url"],
                     opacity=widget["opacity"],
@@ -610,4 +610,5 @@ if __name__ == "__main__":
     
     window = SettingsWindow()
     window.show()
+
     sys.exit(app.exec_())
